@@ -10,6 +10,8 @@ package com.wiki;
 
  */
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,9 +30,9 @@ public class Parser {
         //вся инфа будет в формате json
         return "https://" + language + ".wikipedia.org/w/api.php?action=query&prop=revisions&explaintext&exsectionformat=plain" + "&prop=extracts&format=json&redirects&titles=";
     }
-    public static String connecting_url(String api)throws IOException {
+    public static String connecting_url(String url2)throws IOException {
         //идет запрос к серверу. Нужно создать открыть соединение и получить InputStream
-        URL url = new URL(api);
+        URL url = new URL(url2);
         HttpURLConnection connect = (HttpURLConnection)url.openConnection(); //используем HttpURLConnection для GET запроса
         connect.setRequestMethod("GET");
         // читаем данные в буфер
@@ -38,7 +40,16 @@ public class Parser {
         String reply = bufferedReader.readLine(); // чтение построчно
         bufferedReader.close();  // закрытие
         return reply;
+
     }
 
+    public static void my_article(String language, String specific_topic) throws IOException {
+        // будем использовать библу Gson так как сервер возвращает данные в формате json и лучше всего подойдет Gson
+        Gson gson = new Gson();
+        String my_api_title = title_api_url(language,specific_topic);
+        String content = my_content(language);
+        String my_topic = specific_topic;
 
+
+    }
 }
