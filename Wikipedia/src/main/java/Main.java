@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        ArrayList languageList = new ArrayList<>(Arrays.asList("en", "es", "de", "ru",  "fr"));
-        String language = "dasda";
+        ArrayList languageList = new ArrayList<>(Arrays.asList("en", "ru"));
+        String language="lang";
         Scanner in = new Scanner(System.in);
         while (!languageList.contains(language)) {
             System.out.println("Введите en чтобы продолжить");

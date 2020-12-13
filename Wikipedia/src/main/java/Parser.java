@@ -21,15 +21,12 @@ import java.util.Scanner;
 
 
 public class Parser {
-    public static String title_api_url(String language,String specific_topic){
-        //генерируем нашу статью и тем самым потом получаем название статей
-        return "https://" + language + ".wikipedia.org/w/api.php?action=opensearch&format=json&search=" + specific_topic;
-    }
     public static String myContent(String language, String specific_topic){
         //Получение информации о версии страницы (revision и потом в конце plain без форматирования)
         //вся инфа будет в формате json
         return "https://" + language + ".wikipedia.org/w/api.php?action=opensearch&search=" + specific_topic + "&format=json";
     }
+
     public static String connectingUrl(String url2)throws IOException {
         //идет запрос к серверу. Нужно создать открыть соединение и получить InputStream
         url2 = url2.replaceAll(" ", "_");
@@ -49,7 +46,6 @@ public class Parser {
         Gson gson = new Gson();
         ArrayList doneJSON = gson.fromJson(inputJSON, ArrayList.class);
         ArrayList searchOutputPageNames = new ArrayList((Collection) doneJSON.get(1));
-//        ArrayList searchOutputPageLinks = new ArrayList((Collection) doneJSON.get(3));
         if (searchOutputPageNames.size() > 1) {
             System.out.println(searchOutputPageNames);
         }
@@ -76,7 +72,6 @@ public class Parser {
                         Scanner in = new Scanner(System.in);
                         String pageChoice = in.nextLine();
                         for(Object item : searchOutputPageNames) {
-                           // searchOutputPageNames.set(searchOutputPageNames.indexOf(item), item.toString().compareToIgnoreCase());
                             if(item.toString().equalsIgnoreCase(pageChoice)){
                                 printPage(pageChoice);
                                 check = true;
