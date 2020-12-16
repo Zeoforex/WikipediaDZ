@@ -22,7 +22,7 @@ import java.util.Scanner;
 
 public class Parser {
     public static String myContent(String language, String specific_topic){
-        //Получение информации о версии страницы (revision и потом в конце plain без форматирования)
+        //Получение информации
         //вся инфа будет в формате json
         return "https://" + language + ".wikipedia.org/w/api.php?action=opensearch&search=" + specific_topic + "&format=json";
     }
@@ -67,30 +67,25 @@ public class Parser {
 
 
                 Boolean check = false;
-                while (!check)
-                    try {
-                        Scanner in = new Scanner(System.in);
-                        String pageChoice = in.nextLine();
-                        for(Object item : searchOutputPageNames) {
-                            if(item.toString().equalsIgnoreCase(pageChoice)){
-                                printPage(pageChoice);
-                                check = true;
-                            }
+                while (!check) {
+                    Scanner in = new Scanner(System.in);
+                    String pageChoice = in.nextLine();
+                    for (Object item : searchOutputPageNames) {
+                        if (item.toString().equalsIgnoreCase(pageChoice)) {
+                            System.out.println("Все отлично теперь внизу будет статья");
+                            printPage(pageChoice);
+                            check = true;
                         }
-
-                    }catch (IndexOutOfBoundsException e){
-                        check = false;
-                        System.out.println("Попробуйте снова");
-                    }
+                    } if (check!=true){
+                    System.out.println("Выбор неправильный"); }
+                }
                 return true;
-
         }
 
     }
 
     public static void printPage(String pageName) throws IOException {
         String rawJSON = connectingUrl("https://en.wikipedia.org/api/rest_v1/page/summary/" + pageName);
-//        System.out.println(rawJSON);
         Gson gson = new Gson();
 
         JsonObject json = gson.fromJson(rawJSON, JsonObject.class);
